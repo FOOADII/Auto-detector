@@ -1,22 +1,22 @@
 "use client"
-import { ModeToggle } from '@/components/toggle-theme';
-import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Separator } from '@/components/ui/separator';
-import { Slider } from '@/components/ui/slider';
-import { beep } from '@/utils/audio';
-import { Camera, FlipHorizontal, PersonStanding, Video, Volume2 } from 'lucide-react';
+import { ModeToggle } from '@/components/toggle-theme'
+import { Button } from '@/components/ui/button'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Separator } from '@/components/ui/separator'
+import { Slider } from '@/components/ui/slider'
+import { beep } from '@/utils/audio'
+import { Camera, FlipHorizontal, PersonStanding, Video, Volume2 } from 'lucide-react'
 import React, { useEffect, useRef, useState } from 'react'
-import { ThreeCircles } from 'react-loader-spinner';
-import Webcam from 'react-webcam';
-import { toast } from 'sonner';
+import { ThreeCircles } from 'react-loader-spinner'
+import Webcam from 'react-webcam'
+import { toast } from 'sonner'
 import * as cocossd from '@tensorflow-models/coco-ssd'
-import "@tensorflow/tfjs-backend-cpu";
-import "@tensorflow/tfjs-backend-webgl";
-import { DetectedObject, ObjectDetection } from '@tensorflow-models/coco-ssd';
-import { drawOnCanvas } from '@/utils/draw';
-import { format } from 'path';
-import SocialMediaLinks from '@/components/social-links';
+import "@tensorflow/tfjs-backend-cpu"
+import "@tensorflow/tfjs-backend-webgl"
+import { DetectedObject, ObjectDetection } from '@tensorflow-models/coco-ssd'
+import { drawOnCanvas } from '@/utils/draw'
+import SocialMediaLinks from '@/components/social-links'
+import LandingPage from '@/components/landing-page'
 
 type Props = {}
 let interval: any = null
@@ -25,8 +25,6 @@ let stopTimeOut: any = null
 const HomePage = (props: Props) => {
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
-
       //sttedsssssssssssssssssssss
   const [mirrored,setMirrored] = useState <boolean> (true)
   const [isRecording, setIsRecording] = useState<boolean> (false)
@@ -37,8 +35,9 @@ const HomePage = (props: Props) => {
 
  const mediaRecorderRef =useRef<MediaRecorder | null>(null)
 
- // intialize the media recorder
+ // intializing the media recorder
  useEffect(() => {
+  <LandingPage/>
   if(webcamRef && webcamRef.current){
     const stream = (webcamRef.current.video as any).captureStream()
       if(stream){
@@ -64,8 +63,6 @@ const HomePage = (props: Props) => {
       }
   }
   },[webcamRef])
- 
-  
 
   useEffect(() => {
     setLoading(true)
@@ -115,9 +112,10 @@ const HomePage = (props: Props) => {
     },100)
 
     return ()=> clearInterval(interval)},
-  [webcamRef.current, model, mirrored, autoRecordEnabled, runPrediction])  
+  [webcamRef.current, model, mirrored, autoRecordEnabled, runPrediction])
   return (
     <div className='flex h-screen'>
+      
       {/*this is the left devision of webcam and canvas */}
       <div className='relative'>
         <div className='relative h-screen w-full'>
@@ -136,18 +134,17 @@ const HomePage = (props: Props) => {
             <FlipHorizontal/></Button>
             <Separator className='my-2'/>
           </div>
-      {/*middle */}
+      {/*middle    */}
         <div className='flex flex-col gap-2'>
            <Separator className='my-2'/>
            <Button variant={'outline'} size={'icon'} onClick= {userPromptScreenshot}>
-           
+
             <Camera/>
-           
+
            </Button>
 
           <Separator className='my-2'/>
            <Button variant={isRecording ? 'destructive' :  'outline'} size={'icon'} onClick= {userPromptRecord}>
-           
             <Video/>
            </Button>
         <Separator className='my-2'/>
@@ -155,7 +152,6 @@ const HomePage = (props: Props) => {
           onClick={toggleAutoRecord}>
          {autoRecordEnabled ? <ThreeCircles color='white' height= {35} /> : <PersonStanding/>} </Button>
         </div> 
-        
       {/* bottom*/}
         <div className='flex flex-col gap-2'>       
        <Separator className='my-2'/>
@@ -223,8 +219,9 @@ const HomePage = (props: Props) => {
        startRecording(false)
       }
   }
-
   //there is a sound when it webcam and mediaRecorder are on or start 
+
+  
   function startRecording(doBeep: boolean){
     if (webcamRef.current && mediaRecorderRef.current?.state !== 'recording')
     {
@@ -289,20 +286,20 @@ function toggleAutoRecord(){
         </li>
 
         <li>
-          <strong>Volume Slider 🔊</strong>
+          <strong>Volume Slider </strong>
           <p>Adjust the volume level of the notifications.</p>
         </li>
         <li>
-          <strong>Camera Feed Highlighting 🎨</strong>
+          <strong>Camera Feed Highlighting </strong>
           <p>
             Highlights persons in{" "}
-            <span style={{ color: "#FF0F0F" }}>red</span> and other objects in{" "}
-            <span style={{ color: "#00B612" }}>green</span>.
+            <span style={{ color: "" }}>red</span> and other objects in{" "}
+            <span style={{ color: "" }}>green</span>.
           </p>
         </li>
         <Separator />
         <li className="space-y-4">
-          <strong>Connect with me on my socialMedia💬 </strong>
+          <strong>Connect with me on my socialMedia </strong>
           <SocialMediaLinks/>
           <br />
           <br />
@@ -337,7 +334,7 @@ function formatDate (d: Date){
       d.getMinutes().toString().padStart(2,"0"),
       d.getSeconds().toString().padStart(2,"0"),
      ].join("-")
-     return formatDate
+     return formatDate;
 }
 function base64toBlob(base64Data: any ){
   const byteCharacters = atob(base64Data.split(",")[1])
